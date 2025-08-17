@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Prediction Result</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f1f3f6; margin: 0; padding: 20px; }
+    .container { max-width: 600px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px #ccc; }
+    h2 { text-align: center; margin-bottom: 20px; }
+    .result p { font-size: 18px; margin: 10px 0; }
+    .back { display: block; margin-top: 20px; text-align: center; }
+    .back a { text-decoration: none; color: white; background: #007bff; padding: 10px 15px; border-radius: 5px; }
+    .back a:hover { background: #0056b3; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Prediction Results</h2>
+    <div class="result">
+      <p><strong>Calories:</strong> {{ calories }}</p>
+      <p><strong>Protein:</strong> {{ protein }} g</p>
+      <p><strong>Carbs:</strong> {{ carbs }} g</p>
+      <p><strong>Fat:</strong> {{ fat }} g</p>
+      <p><strong>Diet Type:</strong> {{ diet_type }}</p>
+      <p><strong>Recipe Name:</strong> {{ recipe_name }}</p>
+      <p><strong>Cuisine Type:</strong> {{ cuisine_type }}</p>
+    </div>
+    <div class="back">
+      <a href="/">Go Back</a>
+    </div>
+  </div>
+</body>
+</html>

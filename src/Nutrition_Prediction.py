@@ -6,7 +6,7 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Dropout
 import joblib
 
-# ---------------- Load Dataset ----------------
+#Load Dataset
 df = pd.read_csv("CalorieMap\Datasets\DietTypesDataset.csv")
 
 # Features and Targets

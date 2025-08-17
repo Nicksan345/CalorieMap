@@ -1,39 +1,52 @@
-import numpy as np
 import pandas as pd
-from sklearn.preprocessing import StandardScaler
+import numpy as np
 from sklearn.model_selection import train_test_split
-from tensorflow.keras.models import Model
-from tensorflow.keras.layers import Input, Dense, Dropout
+from sklearn.preprocessing import StandardScaler
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Dropout
 import joblib
 
-# Load dataset
-df = pd.read_csv("CalorieMap/Datasets/DietTypesDataset.csv")
+# ---------------- Load Dataset ----------------
+df = pd.read_csv("CalorieMap\Datasets\DietTypesDataset.csv")
 
-# Nutrition features and target
+# Features and Targets
 X_nutrition = df[['Calories']].values
 y_nutrition = df[['Protein(g)', 'Carbs(g)', 'Fat(g)']].values
 
-# Scale target
+# Scale calories (important for stable training)
 scaler_nutrition = StandardScaler()
-y_nutrition = scaler_nutrition.fit_transform(y_nutrition)
+X_nutrition_scaled = scaler_nutrition.fit_transform(X_nutrition)
+
+# Save the scaler for later use in app.py
 joblib.dump(scaler_nutrition, "CalorieMap/encoders/scaler_nutrition.pkl")
 
 # Train-test split
-X_train, X_val, y_train, y_val = train_test_split(X_nutrition, y_nutrition, test_size=0.2, random_state=42)
+X_train, X_val, y_train, y_val = train_test_split(
+    X_nutrition_scaled, y_nutrition, test_size=0.2, random_state=42
+)
 
-# Build model
-input_n = Input(shape=(1,))
-x = Dense(64, activation='relu')(input_n)
-x = Dropout(0.2)(x)
-x = Dense(32, activation='relu')(x)
-output_n = Dense(3, activation='linear')(x)
+# ---------------- Build Nutrition Model ----------------
+nutrition_model = Sequential([
+    Dense(64, activation='relu', input_shape=(X_train.shape[1],)),
+    Dropout(0.2),
+    Dense(32, activation='relu'),
+    Dense(3, activation='relu')
+  
+])
 
-nutrition_model = Model(inputs=input_n, outputs=output_n)
-nutrition_model.compile(optimizer='adam', loss='mse')
+nutrition_model.compile(optimizer='adam', loss='mse', metrics=['mae'])
 
-# Train model
-nutrition_model.fit(X_train, y_train, validation_data=(X_val, y_val), epochs=50, batch_size=16, verbose=1)
+# Train the model
+nutrition_model.fit(
+    X_train, y_train,
+    epochs=50,
+    batch_size=16,
+    validation_data=(X_val, y_val),
+    verbose=1
+)
 
-# Save model
+# Save trained model
 nutrition_model.save("CalorieMap/models/nutrition_model.h5")
-print("Nutrition model trained and saved!")
+
+print("Nutrition model trained and saved as nutrition_model.h5")
+

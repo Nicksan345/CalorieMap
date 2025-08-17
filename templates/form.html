@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calorie & Diet Predictor</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.2);
+            width: 400px;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin: 8px 0;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            margin-top: 10px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e2f0d9;
+            border-radius: 5px;
+        }
+        .error {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Calorie & Diet Predictor</h2>
+        <form method="POST">
+            <input type="number" step="any" name="age" placeholder="Age" required>
+            <input type="number" step="any" name="weight" placeholder="Weight (kg)" required>
+            <input type="number" step="any" name="height" placeholder="Height (m)" required>
+            <input type="number" step="any" name="BMI" placeholder="BMI" required>
+            <input type="number" step="any" name="BMR" placeholder="BMR" required>
+            <input type="number" step="any" name="activity_level" placeholder="Activity Level (1.2 - 1.9)" required>
+            <select name="gender" required>
+                <option value="" disabled selected>Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <button type="submit">Predict</button>
+        </form>
+
+        {% if result %}
+        <div class="result">
+            <p><strong>Predicted Calories:</strong> {{ result.calories }}</p>
+            <p><strong>Protein (g):</strong> {{ result.protein }}</p>
+            <p><strong>Carbs (g):</strong> {{ result.carbs }}</p>
+            <p><strong>Fat (g):</strong> {{ result.fat }}</p>
+            <p><strong>Diet Type:</strong> {{ result.diet_type }}</p>
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error">
+            <p>Error: {{ error }}</p>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>

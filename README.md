@@ -39,6 +39,7 @@ CalorieMap/
 │   └── result.html
 └── Datasets/              # Dataset files
 │   └── DietTypesDataset.csv
+|   └── CaloriePredictionDataset.csv
 └── src/                   # Python scripts for training models
     ├── calorie_Prediction.py
     ├── Nutrition_Prediction.py
